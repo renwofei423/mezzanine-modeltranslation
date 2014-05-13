@@ -2,7 +2,9 @@ mezzanine-modeltranslation
 ==========================
 
 Easily add internationalization to Mezzanine CMS via django-modeltranslation.
+
 Translated: Page, Gallery, Link, Image, BlogPost including META fields.
+
 Not translated: Keyword
 
 Installation
