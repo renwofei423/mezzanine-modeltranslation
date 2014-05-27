@@ -91,3 +91,24 @@ if "mezzanine.galleries" in settings.INSTALLED_APPS:
         pass
     admin.site.unregister(Gallery)
     admin.site.register(Gallery, TransGalleryAdmin)
+
+if "mezzanine.forms" in settings.INSTALLED_APPS:
+    from mezzanine.forms.models import Form, Field
+
+    class FieldTranslationOptions(TranslationOptions):
+        fields = ('label', 'choices', 'default', 'help_text')
+    translator.register(Field, FieldTranslationOptions)
+
+    class FormTranslationOptions(TranslationOptions):
+        fields = ("title", "content", "button_text", "response")
+    translator.register(Form, FormTranslationOptions)
+
+    # admin
+    from mezzanine.forms.admin import FormAdmin, FieldAdmin
+    class TransFieldAdmin(FieldAdmin, TranslationTabularInline):
+        pass
+    class TransFormAdmin(FormAdmin, TranslationAdmin):
+        inlines = [TransFieldAdmin,]
+        pass
+    admin.site.unregister(Form)
+    admin.site.register(Form, TransFormAdmin)
