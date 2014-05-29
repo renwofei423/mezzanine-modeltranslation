@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib import admin
 from mezzanine.conf import settings
 from modeltranslation.translator import translator, TranslationOptions
-from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from mezzanine.core.models import RichText, MetaData, Slugged
 from mezzanine.pages.models import Page
+
 
 # Common(shared/base classes)
 class MetaDataTranslationOptions(TranslationOptions):
@@ -35,18 +34,6 @@ if "mezzanine.blog" in settings.INSTALLED_APPS:
         pass
     translator.register(BlogCategory, BlogCategoryTranslationOptions)
 
-    # admin
-    from mezzanine.blog.admin import BlogPostAdmin, BlogCategoryAdmin
-    class TransBlogPostAdmin(BlogPostAdmin, TranslationAdmin):
-        pass
-    admin.site.unregister(BlogPost)
-    admin.site.register(BlogPost, TransBlogPostAdmin)
-
-    class TransBlogCategoryAdmin(BlogCategoryAdmin, TranslationAdmin):
-        pass
-    admin.site.unregister(BlogCategory)
-    admin.site.register(BlogCategory, TransBlogCategoryAdmin)
-
 if "mezzanine.pages" in settings.INSTALLED_APPS:
     from mezzanine.pages.models import RichTextPage, Link
     class RichTextPageTranslationOptions(TranslationOptions):
@@ -56,20 +43,6 @@ if "mezzanine.pages" in settings.INSTALLED_APPS:
     class LinkTranslationOptions(TranslationOptions):
         pass
     translator.register(Link, LinkTranslationOptions)
-
-    # admin
-    from mezzanine.pages.admin import PageAdmin, LinkAdmin
-    class TransPageAdmin(PageAdmin, TranslationAdmin):
-        pass
-    admin.site.unregister(RichTextPage)
-    admin.site.register(RichTextPage, TransPageAdmin)
-    admin.site.unregister(Page)
-    admin.site.register(Page, TransPageAdmin)
-
-    class TransLinkAdmin(LinkAdmin, TranslationAdmin):
-        pass
-    admin.site.unregister(Link)
-    admin.site.register(Link, TransLinkAdmin)
 
 if "mezzanine.galleries" in settings.INSTALLED_APPS:
     from mezzanine.galleries.models import Gallery, GalleryImage
@@ -82,15 +55,11 @@ if "mezzanine.galleries" in settings.INSTALLED_APPS:
         pass
     translator.register(Gallery, GalleryTranslationOptions)
 
-    # admin
-    from mezzanine.galleries.admin import GalleryAdmin, GalleryImageInline
-    class TransGalleryImageInline(GalleryImageInline, TranslationTabularInline):
+if "mezzanine.generic" in settings.INSTALLED_APPS:
+    from mezzanine.generic.models import Keyword
+    class KeywordTranslationOptions(TranslationOptions):
         pass
-    class TransGalleryAdmin(GalleryAdmin, TranslationAdmin):
-        inlines = [TransGalleryImageInline,]
-        pass
-    admin.site.unregister(Gallery)
-    admin.site.register(Gallery, TransGalleryAdmin)
+    translator.register(Keyword, KeywordTranslationOptions)
 
 if "mezzanine.forms" in settings.INSTALLED_APPS:
     from mezzanine.forms.models import Form, Field
@@ -103,12 +72,7 @@ if "mezzanine.forms" in settings.INSTALLED_APPS:
         fields = ("title", "content", "button_text", "response")
     translator.register(Form, FormTranslationOptions)
 
-    # admin
-    from mezzanine.forms.admin import FormAdmin, FieldAdmin
-    class TransFieldAdmin(FieldAdmin, TranslationTabularInline):
-        pass
-    class TransFormAdmin(FormAdmin, TranslationAdmin):
-        inlines = [TransFieldAdmin,]
-        pass
-    admin.site.unregister(Form)
-    admin.site.register(Form, TransFormAdmin)
+
+
+
+
