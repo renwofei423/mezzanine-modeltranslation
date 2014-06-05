@@ -42,6 +42,10 @@ if "mezzanine.galleries" in settings.INSTALLED_APPS:
     admin.site.unregister(Gallery)
     admin.site.register(Gallery, TransGalleryAdmin)
 
+if "mezzanine.generic" in settings.INSTALLED_APPS:
+    from mezzanine.generic.models import Keyword
+    admin.site.register(Keyword)
+    
 if "mezzanine.forms" in settings.INSTALLED_APPS:
     from mezzanine.forms.models import Form, Field
     # admin
