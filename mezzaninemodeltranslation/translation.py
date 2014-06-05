@@ -58,7 +58,7 @@ if "mezzanine.galleries" in settings.INSTALLED_APPS:
 if "mezzanine.generic" in settings.INSTALLED_APPS:
     from mezzanine.generic.models import Keyword
     class KeywordTranslationOptions(TranslationOptions):
-        pass
+        fields = ("title",)
     translator.register(Keyword, KeywordTranslationOptions)
 
 if "mezzanine.forms" in settings.INSTALLED_APPS:
